@@ -1,7 +1,17 @@
-<%= form_with model: @post do |form| %>
-  <%= form.label "Tittle:" %>
-  <%= form.text_field :title %>
-  <%= form.label "Body" %>
-  <%= form.text_field :body %>
-  <%= form.submit "Create" %>
+<%= form_with model: @post, local: true do |f| %>
+  <% if @post.errors.any? %>
+    <h3> <%= pluralize(@post.errors.count, 'error') %> must be fixed </h3>
+    <ul>
+      <% @post.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <div class="form-group">
+    <%= f.text_field :title, placeholder: "Enter a title", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.text_area :body, placeholder: "What's your post?", class: "form-control" %>
+  </div>
+  <%= f.submit class: "btn btn-primary" %>
 <% end %>

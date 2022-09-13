@@ -1,16 +1,30 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Posts</h1>
-
-<%= link_to "New post", new_post_path %>
-<div class="post-container" id="posts">
-  <% @posts.reverse_each do |post| %>
-  <div class="post">
-    <% if user_signed_in? %>
-      <p class="author"><%= post.user.username %>:</p>
-    <% end %>
-    <p class="post-content"><%= post.title %></p>
-    <p class="post-content"><%= post.body %></p>
+<div class="row mb-4">
+  <div class="col">
+    <h1>Secrets</h1>
   </div>
+  <div class="col">
+    <%= link_to 'New Secret', new_post_path, class: "btn btn-primary float-right"%>
+  </div>
+</div>
+
+<div class="row">
+  <% @posts.reverse_each do |post| %>
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title"><%= post.title.titleize %></h4>
+          <p class="card-text text-muted"><%= post.body.truncate(100) %></p>
+        </div>
+
+        <div class="card-footer text-muted">
+          Shared by
+          <% if signed_in? %>
+            <%= post.user.username %>
+          <% else %>
+            <i class="fas fa-lock"></i>
+          <% end %>
+        </div>
+      </div>
+    </div>
   <% end %>
 </div>
